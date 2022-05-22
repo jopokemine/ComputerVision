@@ -32,8 +32,8 @@ def create_dir(path):
 
 
 if __name__ == "__main__":
-    video_paths = glob("videos/*")
-    save_dir = "save"
+    video_paths = glob("database/videos/*")
+    save_dir = "database/frames"
 
     for path in video_paths:
         save_frame(path, save_dir)

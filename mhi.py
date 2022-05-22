@@ -17,7 +17,7 @@ def main():
     live_video = False
     video_src = 0
     if not live_video:
-        video_src = "videos/1.avi"
+        video_src = "database/videos/person01_jogging_d1_uncomp.avi"
         # video_src = "E:\Projects\computer-vision\computer-vision-python\opencv-starter\data/video\AVSS/AVSS_AB_Easy.avi".replace('\\', '/')
 
     cv2.namedWindow('motion-history')
@@ -51,6 +51,7 @@ def main():
         if 0xFF & cv2.waitKey(5) == 27:
             break
 
+    cv2.imwrite('mh.png ', mh)
     cv2.destroyAllWindows()
 
 
