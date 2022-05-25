@@ -130,7 +130,7 @@ dmypy.json
 
 
 # Ignore database to ensure LFS is not needed
-database/*
+database*/*
 database.zip
 
 .DS_STORE

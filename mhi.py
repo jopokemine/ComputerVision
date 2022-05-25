@@ -6,13 +6,15 @@ MHI_DURATION = 50
 DEFAULT_THRESHOLD = 32
 
 
-def generate_mhi(video_path, out_path=None) -> np.uint8:
+def generate_mhi(video_path, out_path=None, every_n_frames=0) -> np.uint8:
     cam = cv.VideoCapture(video_path)
     ret, frame = cam.read()
     h, w = frame.shape[:2]
     prev_frame = frame.copy()
     motion_history = np.zeros((h, w), np.float32)
     timestamp = 0
+    idx = 0
+    frame_count = 0
     while True:
         ret, frame = cam.read()
         if not ret:
@@ -33,7 +35,14 @@ def generate_mhi(video_path, out_path=None) -> np.uint8:
 
         prev_frame = frame.copy()
 
+        frame_count += 1
+        if out_path != None and frame_count == every_n_frames:
+            frame_count = 0
+            idx += 1
+            cv.imwrite(os.path.join(
+                out_path, f'{os.path.split(video_path)[-1][:-4]}_{idx}_mhi.png'), mh)
+
     if out_path != None:
         cv.imwrite(os.path.join(
-            out_path, f'{os.path.split(video_path)[-1][:-4]}_mhi.png'), mh)
+            out_path, f'{os.path.split(video_path)[-1][:-4]}_{idx + 1}_mhi.png'), mh)
     return mh
